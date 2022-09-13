@@ -1,13 +1,15 @@
 package exercise.table;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 import exercise.csvreader.CsvReader;
-import exercise.model.Table;
+import exercise.model.SQLTable;
 
 public class TableListImpl implements TableList {
 
+	private static final String REGEX = ".";
 	private CsvReader csvReader;
 
 	public TableListImpl(CsvReader csvReader) {
@@ -15,10 +17,11 @@ public class TableListImpl implements TableList {
 	}
 
 	@Override
-	public List<Table> csvToTables(List<String> files, int totalTable) {
-		List<Table> result = new ArrayList<>(totalTable);
+	public List<SQLTable> csvToTables(List<String> files) {
+		List<SQLTable> result = new ArrayList<>(files.size());
 		for (String path : files) {
-			Table table = new Table();
+			SQLTable table = new SQLTable();
+			table.setTableNames(getTableName(path));
 			List<List<String>> csvData = csvReader.readCsvFile(path);
 			table.setColumns(csvData.get(0));
 			table.setData(csvData.subList(1, csvData.size()));
@@ -26,6 +29,13 @@ public class TableListImpl implements TableList {
 		}
 		return result;
 
+	}
+
+	private String getTableName(String path) {
+		final String[] dir = path.split(File.separator);
+		String tableName = dir[dir.length - 1];
+		return tableName.concat(REGEX) != null ? tableName.substring(0, tableName.lastIndexOf('.')).toUpperCase()
+				: tableName.toUpperCase();
 	}
 
 }
