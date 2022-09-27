@@ -4,5 +4,6 @@ import exercise.model.SQLTable;
 
 public interface SortTable {
 
-	SQLTable sortTable(SQLTable table, int index);
+	SQLTable sortTableOn(SQLTable table, String column, Order order);
+
 }
