@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import exercise.csvreader.CsvReader;
-import exercise.model.SQLTable;
+import exercise.table.model.Table;
 
 public class TableListImpl implements TableList {
 
@@ -17,15 +17,12 @@ public class TableListImpl implements TableList {
 	}
 
 	@Override
-	public List<SQLTable> csvToTables(List<String> files) {
-		List<SQLTable> result = new ArrayList<>(files.size());
+	public List<Table> csvToTables(List<String> files) {
+		List<Table> result = new ArrayList<>(files.size());
 		for (String path : files) {
-			SQLTable table = new SQLTable();
+			Table table = new Table();
 			table.setTableNames(getTableName(path));
-			List<List<String>> csvData = csvReader.readCsvFile(path);
-			table.setColumns(csvData.get(0));
-			table.setData(csvData.subList(1, csvData.size()));
-			result.add(table);
+			result.add(csvReader.readCsvFile(path));
 		}
 		return result;
 

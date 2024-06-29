@@ -1,8 +1,8 @@
 package exercise.csvreader;
 
-import java.util.List;
+import exercise.table.model.Table;
 
 public interface CsvReader {
 
-	List<List<String>> readCsvFile(String path);
+	Table readCsvFile(String path);
 }

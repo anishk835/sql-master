@@ -2,9 +2,9 @@ package exercise.table;
 
 import java.util.List;
 
-import exercise.model.SQLTable;
+import exercise.table.model.Table;
 
 public interface TableList {
 
-	List<SQLTable> csvToTables(List<String> files);
+	List<Table> csvToTables(List<String> files);
 }
